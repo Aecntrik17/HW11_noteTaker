@@ -14,3 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // for all frontend files, search the "public" folder
 app.use(express.static("public"));
+
+// Listener
+app.listen(PORT, function () {
+  console.log("App listening on PORT" + PORT);
+});
