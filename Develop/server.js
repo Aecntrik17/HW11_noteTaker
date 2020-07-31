@@ -50,6 +50,16 @@ app.post("/api/notes", function (req, res) {
   res.json(notes);
 });
 
+// method to remove an id from the notes array
+app.delete("/api/notes/:id", function (req, res) {
+  const id = req.params.id;
+  console.log(newNote);
+  // filter?
+  // splice?
+  fs.writeFileSync("./db/db.json", JSON.stringify(notes));
+  res.json(notes);
+});
+
 // Listener
 app.listen(PORT, function () {
   console.log("App listening on PORT" + PORT);
