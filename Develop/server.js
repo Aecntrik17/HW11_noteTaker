@@ -26,6 +26,30 @@ app.get("/notes", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
+// API routes
+app.get("/api/notes", function (req, res) {
+  // when the /api/notes is requested use this function to send the data back in json format
+  res.json(notes);
+});
+
+app.post("/api/notes", function (req, res) {
+  const newNote = req.body;
+  // setting conditional to check if the note has an id, and assigns a new accordingly
+  if (notes.length === 0) {
+    newNote.Id = 1;
+  } else {
+    const newNoteId = notes[notes.length - 1].Id + 1;
+    newNote.Id = newNoteId;
+  }
+
+  console.log(newNote);
+  // pushing the new note to the notes array
+  notes.push(newNote);
+  // writing the string into the json file, in json format
+  fs.writeFileSync("./db/db.json", JSON.stringify(notes));
+  res.json(notes);
+});
+
 // Listener
 app.listen(PORT, function () {
   console.log("App listening on PORT" + PORT);
