@@ -36,10 +36,10 @@ app.post("/api/notes", function (req, res) {
   const newNote = req.body;
   // setting conditional to check if the note has an id, and assigns a new accordingly
   if (notes.length === 0) {
-    newNote.Id = 1;
+    newNote.id = 1;
   } else {
-    const newNoteId = notes[notes.length - 1].Id + 1;
-    newNote.Id = newNoteId;
+    const newNoteId = notes[notes.length - 1].id + 1;
+    newNote.id = newNoteId;
   }
 
   console.log(newNote);
@@ -52,12 +52,13 @@ app.post("/api/notes", function (req, res) {
 
 // method to remove an id from the notes array
 app.delete("/api/notes/:id", function (req, res) {
-  const id = req.params.id;
-  console.log(newNote);
-  // filter?
-  // splice?
-  fs.writeFileSync("./db/db.json", JSON.stringify(notes));
-  res.json(notes);
+  const id = parseInt(req.params.id);
+  var newNotes = notes.filter((note) => {
+    return note.id !== id;
+  });
+
+  fs.writeFileSync("./db/db.json", JSON.stringify(newNotes));
+  res.json(newNotes);
 });
 
 // Listener
